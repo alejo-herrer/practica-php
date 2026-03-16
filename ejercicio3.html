@@ -6,23 +6,13 @@
     <title>Document</title>
 </head>
 <body>
-    <h1>PRUEBA METODO POST</h1>
+    <h1>PRUEBA METODO GET</h1>
     
-    <form action="ejercicio2.php" method="post">
+    <form action="ejercicio3.php" method="get">
          Nombre:
-        <input type="text" name="txtNombre" id="">
+        <input type="text" name="nombre" id="">
         <br>
         <input type="submit" value="Enviar">
     </form>
-
-    <?php
-    if($_POST){
-
-        $nombre=$_POST['txtNombre'];
-        echo 'Mi nombre es '.$nombre;
-
-    }
-    ?>
-    
 </body>
 </html>
