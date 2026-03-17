@@ -6,9 +6,9 @@
     <title>Document</title>
 </head>
 <body>
-    <h1>Ejercicio de Operadores Aritmeticos</h1>
+    <h1>Ejercicio de Operadores Lógicos</h1>
     
-    <form action="ejercicio6.php" method="post">
+    <form action="ejercicio8.php" method="post">
          Valor1:
         <input type="text" name="valor1" id="">
         <br>
@@ -27,17 +27,11 @@
         $valor1=$_POST['valor1'];
         $valor2=$_POST['valor2'];
 
-        //SUMA
-        echo '<br>La suma de los valores es '.$valor1+$valor2;
-        
-        //RESTA
-        echo '<br>La resta de los valores es '.$valor1-$valor2;
-        
-        //DIVISION
-        echo '<br>La division de los valores es '.$valor1/$valor2;
-        
-        //MULTIPLICACIÓN
-        echo '<br>La multiplicación de los valores es '.$valor1*$valor2;
+        if(($valor1 != $valor2) && ($valor1 > $valor2)){
+            echo '<br>El valor 1 ('.$valor1.') es diferente y mayor que el valor 2 ('.$valor2.')';
+        } else if(($valor1 != $valor2) || ($valor1 > $valor2)) {
+            echo '<br>El valor 1 ('.$valor1.') es diferente o mayor que el valor 2 ('.$valor2.')';
+        }
     }
     ?>
     
