@@ -10,7 +10,13 @@
 
         $conexion= new PDO("mysql:host=$servidor;dbname=pruebadb",$usuario,$contraseña);
         $conexion->setAttribute(PDO::ATTR_ERRMODE,PDO::ERRMODE_EXCEPTION);
-        echo 'Conexión establecida';
+        echo 'Conexión establecida, se agrego el registro de la foto';
+
+        $sql = "INSERT INTO `fotos` (`id`, `nombre`, `ruta`) VALUES (NULL, 'Foto 1', 'foto.jpg');";
+
+        $conexion->exec($sql);
+
+
 
     }catch(PDOException $error){
 
