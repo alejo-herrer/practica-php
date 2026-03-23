@@ -12,12 +12,18 @@
             $nombre=$_POST['nombre'];
             $descripcion=$_POST['descripcion'];
 
-            $foto=$_FILES['foto']['name'];
+            $fecha= new DateTime();
+
+            $foto=$fecha->getTimestamp()."_".$_FILES['foto']['name'];
+            $foto_temporal=$_FILES['foto']['tmp_name'];
 
 
             $sql = "INSERT INTO `fotos` (`id`,`nombre`,`imagen`,`descripcion`) VALUES (NULL,'$nombre','$foto','$descripcion')";
             $objConexion = new conexion();
             $objConexion->ejecutar($sql);
+
+            move_uploaded_file($foto_temporal,"img/".$foto);
+            header('location:album.php');
         }
 
         $objConexion = new conexion();
@@ -27,6 +33,9 @@
            $id=$_GET['borrar'];
            $sql = "DELETE FROM `fotos` WHERE `id` = $id";
            $objConexion = new conexion();
+
+            $foto=$objConexion->consultar("SELECT imagen FROM `fotos` WHERE `id` = $id");
+            unlink("img/".$foto[0]['imagen']);
            $objConexion->ejecutar($sql);
            header('location:album.php');
         }
@@ -45,13 +54,13 @@
                     <form action='album.php' method='post' enctype='multipart/form-data'>
 
                         Titulo de la foto:
-                        <input class='form-control' type='text' name='nombre' id=''>
+                        <input required class='form-control' type='text' name='nombre' id=''>
                         <br>
                         Foto:
-                        <input class='form-control' type='file' name='foto' id='';>
+                        <input required class='form-control' type='file' name='foto' id='';>
                         <br>
                         Descripción:
-                        <textarea class='form-control' name='descripcion' id='';></textarea>
+                        <textarea required class='form-control' name='descripcion' id='';></textarea>
                         <br>
                         <input class='btn btn-primary' type='submit' value='Subir foto'>
 
@@ -83,7 +92,10 @@
                                 <td><?php echo $imagen['nombre']; ?></td>
                                 <td><?php echo $imagen['imagen']; ?></td>
                                 <td><?php echo $imagen['descripcion']; ?></td>
-                                <td><a class="btn btn-danger" href="?borrar=<?php echo $imagen['id']; ?>" role="button">Eliminar</a></td>
+                                <td>
+                                    <a class="btn btn-danger" href="?borrar=<?php echo $imagen['id']; ?>" role="button">Eliminar</a>
+                                    <a class="btn btn-success" href="img/<?php echo $imagen['imagen']; ?>" role="button">Acceder</a>
+                                </td>
                             </tr>
                         </tbody>
                     <?php } ?>
